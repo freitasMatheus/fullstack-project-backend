@@ -39,12 +39,12 @@ cd fullstack-project-backend
 
 ### 2. Install dependencies:
 ```bash
-npm install
+yarn install
 ```
 
 ### 3. Run the project:
 ```bash
-npm run start:dev
+yarn start:dev
 ```
 
 ## 🐳 Running with Docker
