@@ -1,0 +1,58 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: backend-service
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - redis
+      - elasticsearch
+    networks:
+      - fullstack-network
+
+  db:
+    image: postgres:15
+    container_name: postgres-db
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ecommerce
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - fullstack-network
+
+  redis:
+    image: redis:7
+    container_name: redis-cache
+    restart: always
+    ports:
+      - "6379:6379"
+    networks:
+      - fullstack-network
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.5.1
+    container_name: elasticsearch-service
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    networks:
+      - fullstack-network
+
+networks:
+  fullstack-network:
+
+volumes:
+  pgdata:
