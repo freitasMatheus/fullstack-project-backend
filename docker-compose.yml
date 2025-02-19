@@ -4,6 +4,10 @@ services:
       context: .
       dockerfile: docker/Dockerfile
     container_name: backend-service
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: yarn start:dev
     ports:
       - "3000:3000"
     env_file:
