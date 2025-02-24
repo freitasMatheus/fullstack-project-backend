@@ -7,9 +7,15 @@ config({ path: join(__dirname, '..', envFile) });
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import helmet from 'helmet';
+import { CustomLogger } from './common/logger/logger.service';
+import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  const logger = new CustomLogger();
+  app.useLogger(logger);
+  app.useGlobalFilters(new HttpExceptionFilter(logger));
+
   const allowedOrigins = process.env.CORS_ORIGIN?.split(',').map((origin) => origin.trim()) || [];
   app.use(helmet());
 
