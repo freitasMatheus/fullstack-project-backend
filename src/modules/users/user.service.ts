@@ -14,8 +14,15 @@ export class UserService {
     return this.userRepository.find();
   }
 
-  async createUser(email: string, password: string): Promise<User> {
-    const user = this.userRepository.create({ email, password });
+  async findOne(email: string): Promise<Promise<User> | null> {
+    return this.userRepository.findOneBy({ email });
+  }
+
+  create(userData: Partial<User>): User {
+    return this.userRepository.create(userData);
+  }
+
+  async save(user: User): Promise<User> {
     return this.userRepository.save(user);
   }
 }
