@@ -1,6 +1,7 @@
 import { ExceptionFilter, Catch, ArgumentsHost, HttpException } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { CustomLoggerService } from '../logger/logger.service';
+import { ErrorResponse } from './error-response.type';
 
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {

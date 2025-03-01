@@ -13,7 +13,7 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @Post('login')
   login(@Request() req: AuthRequestType): Promise<AccessTokenType | BadRequestException> {
-    return this.authService.login(req.user);
+    return Promise.resolve(this.authService.login(req.user));
   }
 
   @Post('register')
